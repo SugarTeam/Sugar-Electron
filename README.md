@@ -52,6 +52,7 @@ Sugar-Electron也借鉴了Egg.js的设计模式，提供了一套完整的开发
 
 Sugar-Electron具有较高的扩展性，通过插件机制，可以讲框架的部分能力与框架本身解耦，同时使用者也可以根据自己的业务场景定制插件组合到框架中，降低开发成本。
 
+![设计原则](https://z4a.net/images/2020/06/03/1d7749e2e501f7450.png)
 ![设计原则](https://store-g1.seewo.com/easiclass-public/4d3adfad0fa14c048a646fdb72a74bc3)
 
 Sugar-Electron基于类微内核架构设计，将内部分为以下七大核心模块：
