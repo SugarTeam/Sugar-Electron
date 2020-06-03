@@ -52,7 +52,7 @@ Sugar-Electron也借鉴了Egg.js的设计模式，提供了一套完整的开发
 
 Sugar-Electron具有较高的扩展性，通过插件机制，可以讲框架的部分能力与框架本身解耦，同时使用者也可以根据自己的业务场景定制插件组合到框架中，降低开发成本。
 
-![设计原则](https://raw.githubusercontent.com/SugarTeam/Sugar-Electron/master/pictures/1.png)
+![设计原则](https://store-g1.seewo.com/easiclass-public/4d3adfad0fa14c048a646fdb72a74bc3)
 
 Sugar-Electron基于类微内核架构设计，将内部分为以下七大核心模块：
 
@@ -64,7 +64,7 @@ Sugar-Electron基于类微内核架构设计，将内部分为以下七大核心
 * 插件
 * 进程管理中心
 
-![设计原则](https://raw.githubusercontent.com/SugarTeam/Sugar-Electron/master/pictures/2.png)
+![设计原则](https://store-g1.seewo.com/easiclass-public/2cab4e1b8bfe4d82b4ba07a9a53c4da0)
 
 注：基础进程类与服务进程类同属于原渲染进程
 
@@ -280,9 +280,9 @@ ipc作为Sugar-electron进程间通信核心模块，支持两种通信方式：
 
 ### 请求响应
 
-![进程间通信](https://raw.githubusercontent.com/SugarTeam/Sugar-Electron/master/pictures/3.png)
+![进程间通信](https://store-g1.seewo.com/easiclass-public/001d72859c80476ba4d3828c2eb5e08a)
 
-![进程间通信](https://raw.githubusercontent.com/SugarTeam/Sugar-Electron/master/pictures/6.png)
+![进程间通信](https://store-g1.seewo.com/easiclass-public/a91d3c616d8f4baf94613dd34c7f05b0)
 
 #### 示例
 
@@ -321,7 +321,7 @@ Sugar-electron对响应异常做处理。
 
 ### 发布订阅
 
-![进程间通信](https://raw.githubusercontent.com/SugarTeam/Sugar-Electron/master/pictures/4.png)
+![进程间通信](https://store-g1.seewo.com/easiclass-public/94d89e31f3884a73bf23332043f7d467)
 
 #### 示例
 
@@ -507,7 +507,7 @@ config
 |- config.dev.js      // 开发配置——环境变量env=dev
 ```
 
-![配置](https://raw.githubusercontent.com/SugarTeam/Sugar-Electron/master/pictures/5.png)
+![配置](https://store-g1.seewo.com/easiclass-public/6db999021fef432db2ea887b29374c63)
 
 注：
 - AppData/appName 配置文件config.json { "env": "环境变量", "config": "配置" }
