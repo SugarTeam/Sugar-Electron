@@ -18,13 +18,13 @@ module.exports = {
     // 获取窗口进程id
     getThreadId() {
         if (!windowId) {
-            const remote = require('electron').remote;
+            const remote = window.require('electron').remote;
             windowId = remote && remote.getCurrentWindow().windowId;
         }
         return windowId;
     },
     isBoolean(value) {
-        return !!value
+        return !!value;
     },
     isObject(value) {
         return Object.prototype.toString.call(value) === '[object Object]';

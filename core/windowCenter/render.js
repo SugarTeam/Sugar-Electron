@@ -1,23 +1,26 @@
 const remote = require('electron').remote;
-const ipc = require('../ipc');
+const ipc = require('../ipc/render');
 const { WINDOW_CENTER_IPC_NAME, WINDOW_CENTER_GET_INFO } = require('./const');
+const { MAIN_PROCESS_NAME } = require('../const');
 const modules = {};
-const ipcKeys = ['request', 'subscriber', 'unsubscriber'];
-async function actionWindow (windowName, action = '', args) {
-    return await ipc.request('main', WINDOW_CENTER_IPC_NAME, {
+const ipcKeys = ['request', 'subscribe', 'unsubscribe'];
+async function actionWindow(windowName, action = '', args) {
+    return await ipc.request(MAIN_PROCESS_NAME, WINDOW_CENTER_IPC_NAME, {
         windowName, action, args
     });
 }
 // 初始化
 const { names = [], keys = [] } = remote.getGlobal(WINDOW_CENTER_GET_INFO);
-names.forEach(name => {
+names.concat([MAIN_PROCESS_NAME]).forEach(name => {
     modules[name] = {};
-    keys.forEach(key => {
-        modules[name][key] = function () {
-            const args = [].slice.call(arguments);
-            return actionWindow(name, key, args);
-        }
-    });
+    if (name !== MAIN_PROCESS_NAME) {
+        keys.concat(['isInstanceExist']).forEach(key => {
+            modules[name][key] = function () {
+                const args = [].slice.call(arguments);
+                return actionWindow(name, key, args);
+            }
+        });
+    }
     ipcKeys.forEach(key => {
         modules[name][key] = function () {
             const args = [].slice.call(arguments);

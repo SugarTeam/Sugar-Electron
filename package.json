@@ -1,16 +1,20 @@
 {
   "name": "sugar-electron",
-  "version": "1.0.9",
+  "version": "1.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "D:\\work\\easiclass-pc-new\\output\\EasiClass.exe test"
   },
   "author": "Tomey",
   "license": "ISC",
-  "homepage": "https://github.com/SugarTeam/Sugar-Electron",
+  "homepage": "https://github.com/SugarTurboS/Sugar-Electron",
   "repository": {
     "type": "git",
-    "url": "https://github.com/SugarTeam/Sugar-Electron.git"
+    "url": "https://github.com/SugarTurboS/Sugar-Electron.git"
+  },
+  "devDependencies": {
+    "eslint": "^7.29.0"
   }
 }

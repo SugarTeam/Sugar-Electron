@@ -1,5 +1,6 @@
 module.exports = {
     state: {
-        b: 'b'
+        d: 1
+        
     }
 }

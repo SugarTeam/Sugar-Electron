@@ -1,26 +1,11 @@
 /* eslint-disable no-undef */
-const { app} = require('electron');
-const appName = 'electron-core';
-const defaultState = {
-   webPreferences: {
-      nodeIntegration: true
-   }
-};
-app.on('ready', function () {
-   const { start, BaseWindow, windowCenter } = require('../core');
+const { start, config, plugins, BaseWindow, windowCenter, store, ipc } = require('../core');
 
-   // 启动sugar-electron
-   start({
-      appName,
-      basePath: __dirname
-   });
-   
-   // 设置窗口默认设置
-   BaseWindow.setDefaultOptions(defaultState);
-  
-   const service = require('./services/service');
-   service.start(false);
-
-   const { winA } = windowCenter;
-   winA.open();
+start({ basePath: __dirname }).then(() => {
+   console.log('[sugar-config]', config);
+   console.log('[sugar-plugins]', Object.keys(plugins.adpter));
+   windowCenter.winA.open();
 });
+
+
+

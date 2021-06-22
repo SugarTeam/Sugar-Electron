@@ -1,9 +1,10 @@
 const { BrowserWindow } = require('electron');
 const util = require('../util');
-const ipc = require('../ipc');
-const windowCenter = require('../windowCenter');
+const ipc = require('../ipc/main');
+const windowCenter = require('../windowCenter/main');
 const Events = require('events')
 const windowEvents = [
+    'close',
     'closed',
     'session-end',
     'unresponsive',
@@ -35,67 +36,78 @@ const windowEvents = [
     'rotate-gesture',
     'sheet-begin',
     'sheet-end',
-    'new-window-for-tab' 
+    'new-window-for-tab'
 ];
 // 窗体默认属性
-const defaultOptions = {};
+const defaultOption = {};
 class BaseWindow extends Events {
     // 设置所有窗口默认属性
-    static setDefaultOptions(options) {
-        Object.assign(defaultOptions, options);
+    static setDefaultOption(option) {
+        Object.assign(defaultOption, option);
     }
 
-    constructor(name, options = {}) {
+    constructor(name, option = {}) {
         super();
         if (util.isBoolean(name) === false) {
             throw new Error('process name cannot be null');
         }
         this.instance = null;
         this.name = name;
-        this.options = options;
+        this.option = option;
         // 注册到窗口中心
         windowCenter._register(name, this);
     }
-
-    // 发布通知
-    publisher(eventName) {
-        ipc.publisher({ header: { fromId: this.name, eventName } });
-        this.emit(eventName);
-    }
-
     open(option = {}) {
         try {
             if (this.instance === null) {
-                const options = Object.assign(defaultOptions, this.options, option);
-                this.instance = new BrowserWindow(options);
+                const _option = Object.assign({}, defaultOption, this.option, option);
+                this.instance = new BrowserWindow(_option);
                 // 窗口ID，必须
                 this.instance.windowId = this.name;
                 ipc._register(this.name, this.instance);
-                if (options.show !== false) {
-                    this.publisher('ready-to-show');
-                }
                 windowEvents.forEach(eventName => {
                     this.instance.on(eventName, () => {
                         // 广播窗口消息
-                        this.publisher(eventName);
+                        this.publisher(eventName, { ...arguments });
                         if (eventName === 'closed') {
                             this.instance = null;
                             ipc._unregister(this.name);
                         }
                     });
                 });
-    
-                this.instance.loadURL(options.url);
-            }  
+                this.instance.loadURL(_option.url);
+            }
         } catch (error) {
             console.error(error);
         }
-  
         return this.instance;
+    }
+
+    // 判断窗口实例是否存在
+    isInstanceExist() {
+        return !!this.instance;
     }
 
     getInstance() {
         return this.instance;
+    }
+
+    // 发布通知
+    publisher(eventName, params = {}) {
+        ipc._publisher({ header: { fromId: this.name, eventName }, body: params });
+        this.emit(eventName, params);
+    }
+
+    request(eventName = '', data = {}, timeout) {
+        return ipc.request(this.name, eventName, data, timeout);
+    }
+
+    subscribe(eventName = '', callback) {
+        return ipc.subscribe(this.name, eventName, callback);
+    }
+
+    unsubscribe(eventName, callback) {
+        return ipc.unsubscribe(this.name, eventName, callback);
     }
 }
 
