@@ -20,7 +20,7 @@
 ## 安装
 
 ```bash
-npm i sugar-electron --save-dev
+npm i sugar-electron
 ```
 
 ## 脚手架
